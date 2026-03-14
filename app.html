@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinCalc — Calculadoras de Investimento</title>
+<meta name="description" content="Calculadoras de investimento feitas por Matheus Augusto: juros compostos, CDB, Tesouro Direto, ações, FIIs e carteira.">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-brand" href="#">
+    <div class="nav-logo">📈</div>
+    FinCalc
+  </a>
+  <div class="nav-right">
+    <span class="nav-tag">gratuito</span>
+    <button class="theme-btn" id="themeBtn" title="Alternar tema" aria-label="Alternar tema">🌙</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">feito por Matheus Augusto</div>
+  <h1>Simule seus investimentos antes de colocar dinheiro nisso</h1>
+  <p>Juros compostos, CDB, Tesouro Direto, ações, FIIs — tudo num lugar só, sem cadastro, sem enrolação.</p>
+  <button class="hero-cta" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">
+    ver as calculadoras ↓
+  </button>
+</div>
+
+<div class="stats" style="position:relative;z-index:1;max-width:680px;margin:0 auto 64px">
+  <div class="stat"><div class="stat-n" data-count="9">0</div><div class="stat-l">calculadoras</div></div>
+  <div class="stat"><div class="stat-n" data-count="20">0</div><div class="stat-l">ações B3</div></div>
+  <div class="stat"><div class="stat-n" data-count="15">0</div><div class="stat-l">FIIs</div></div>
+  <div class="stat"><div class="stat-n" data-count="100">0</div><div class="stat-l">% grátis</div></div>
+</div>
+
+<!-- RENDA FIXA -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-tag"><span class="dot"></span>Renda Fixa</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card" onclick="openModal('juros')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico indigo">📈</div>
+      <div class="card-title">Juros Compostos</div>
+      <div class="card-desc">Coloca o valor inicial, o aporte mensal e a taxa — vê o dinheiro crescer ano a ano com gráfico.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('cdb')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico amber">🏦</div>
+      <div class="card-title">CDB</div>
+      <div class="card-desc">Quanto rende o seu CDB no final? Calcula bruto, desconta o IR e mostra o líquido real.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('tesouro')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico green">🏛️</div>
+      <div class="card-title">Tesouro Direto</div>
+      <div class="card-desc">Selic, IPCA+ ou Prefixado — simula o rendimento líquido com IR regressivo.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('renda')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico cyan">💵</div>
+      <div class="card-title">Renda Passiva</div>
+      <div class="card-desc">Quanto você precisa ter investido pra viver de renda? Digita o valor mensal e descobre.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('aportes')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico violet">💰</div>
+      <div class="card-title">Aportes Mensais</div>
+      <div class="card-desc">Tem uma meta? Calcula quanto precisa investir por mês pra chegar lá no prazo que você quer.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('previdencia')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico rose">🛡️</div>
+      <div class="card-title">Previdência Privada</div>
+      <div class="card-desc">PGBL ou VGBL — simula o patrimônio acumulado e a dedução no IR pra quem usa PGBL.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RENDA VARIÁVEL -->
+<div class="section">
+  <div class="sec-head">
+    <div class="sec-tag"><span class="dot" style="background:var(--g2);box-shadow:0 0 8px var(--g2)"></span>Renda Variável</div>
+    <div class="sec-line"></div>
+  </div>
+  <div class="grid">
+
+    <div class="card" onclick="openModal('acoes')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico indigo">📊</div>
+      <div class="card-title">Ações e Dividendos</div>
+      <div class="card-desc">Escolhe a ação, coloca a quantidade e vê quanto recebe de dividendo por mês e no ano.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('fiis')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico amber">🏢</div>
+      <div class="card-title">Fundos Imobiliários</div>
+      <div class="card-desc">Seleciona o FII, informa as cotas e calcula a renda mensal com yield atualizado.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+    <div class="card" onclick="openModal('carteira')" role="button" tabindex="0">
+      <div class="shimmer"></div>
+      <div class="card-ico green">🎯</div>
+      <div class="card-title">Carteira Completa</div>
+      <div class="card-desc">Junta renda fixa, ações e FIIs numa visão só — vê a renda total e o yield médio da carteira.</div>
+      <div class="card-arr">→</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL: JUROS COMPOSTOS -->
+<div id="modal-juros" class="overlay" onclick="overlayClick(event,'juros')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(99,102,241,0.15)">📈</div>
+    <div><div class="mtitle">Juros Compostos</div><div class="msub">evolução do patrimônio com aportes mensais</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('juros')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>Valor inicial (R$)</label><input type="number" id="j-ini" value="10000" min="0" oninput="calcJuros()"></div>
+    <div class="field"><label>Aporte mensal (R$)</label><input type="number" id="j-ap" value="500" min="0" oninput="calcJuros()"></div>
+    <div class="field">
+     <label>Taxa anual — <span id="j-taxa-lbl" style="color:var(--p2)">12%</span></label>
+     <div class="range-row">
+      <input type="range" id="j-taxa" min="1" max="30" step="0.5" value="12" oninput="document.getElementById('j-taxa-lbl').textContent=this.value+'%';calcJuros()">
+      <span class="range-val" id="j-taxa-v">12%</span>
+     </div>
+    </div>
+    <div class="field">
+     <label>Período — <span id="j-anos-lbl" style="color:var(--p2)">10 anos</span></label>
+     <div class="range-row">
+      <input type="range" id="j-anos" min="1" max="50" step="1" value="10" oninput="document.getElementById('j-anos-lbl').textContent=this.value+' anos';calcJuros()">
+      <span class="range-val" id="j-anos-v">10</span>
+     </div>
+    </div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Valor Final</div><div class="rv" id="j-final">—</div></div>
+     <div class="ri gr"><div class="rl">Juros Ganhos</div><div class="rv" id="j-juros">—</div></div>
+     <div class="ri"><div class="rl">Total Investido</div><div class="rv" id="j-inv">—</div></div>
+     <div class="ri"><div class="rl">Rentabilidade</div><div class="rv" id="j-rent">—</div></div>
+     <div class="ri"><div class="rl">Renda Mensal Est.</div><div class="rv" id="j-renda">—</div></div>
+     <div class="ri"><div class="rl">Taxa Mensal Equiv.</div><div class="rv" id="j-tm">—</div></div>
+    </div>
+    <div class="prog-wrap">
+     <div class="prog-label"><span>Capital</span><span>Juros</span></div>
+     <div class="prog-bar"><div class="prog-fill" id="j-prog" style="width:50%"></div></div>
+    </div>
+    <div class="cwrap"><canvas id="chart-juros"></canvas></div>
+    <div class="twrap" style="margin-top:14px">
+     <table><thead><tr><th>Ano</th><th>Investido</th><th>Juros</th><th>Total</th></tr></thead>
+     <tbody id="tb-juros"></tbody></table>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: CDB -->
+<div id="modal-cdb" class="overlay" onclick="overlayClick(event,'cdb')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(245,158,11,0.15)">🏦</div>
+    <div><div class="mtitle">CDB</div><div class="msub">rendimento bruto, IR e valor líquido no vencimento</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('cdb')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>Valor investido (R$)</label><input type="number" id="cdb-val" value="10000" min="0" oninput="calcCDB()"></div>
+    <div class="field"><label>% do CDI</label><input type="number" id="cdb-pct" value="110" step="0.5" min="0" oninput="calcCDB()"></div>
+    <div class="field"><label>CDI anual (%)</label><input type="number" id="cdb-cdi" value="13.75" step="0.01" min="0" oninput="calcCDB()"></div>
+    <div class="field"><label>Prazo (meses)</label><input type="number" id="cdb-m" value="24" min="1" oninput="calcCDB()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Valor Líquido</div><div class="rv" id="cdb-liq">—</div></div>
+     <div class="ri"><div class="rl">Valor Bruto</div><div class="rv" id="cdb-bruto">—</div></div>
+     <div class="ri"><div class="rl">Imposto de Renda</div><div class="rv" id="cdb-ir">—</div></div>
+     <div class="ri"><div class="rl">Alíquota IR</div><div class="rv" id="cdb-aliq">—</div></div>
+     <div class="ri gr"><div class="rl">Rentab. Líquida</div><div class="rv" id="cdb-rl">—</div></div>
+     <div class="ri"><div class="rl">Rendimento Médio/mês</div><div class="rv" id="cdb-men">—</div></div>
+    </div>
+    <div class="cwrap"><canvas id="chart-cdb"></canvas></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: TESOURO DIRETO -->
+<div id="modal-tesouro" class="overlay" onclick="overlayClick(event,'tesouro')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(16,185,129,0.15)">🏛️</div>
+    <div><div class="mtitle">Tesouro Direto</div><div class="msub">Selic, IPCA+ e Prefixado — líquido com IR</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('tesouro')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="tabs">
+    <button class="tab on" onclick="setTdTab('selic',this)">Tesouro Selic</button>
+    <button class="tab" onclick="setTdTab('ipca',this)">IPCA+</button>
+    <button class="tab" onclick="setTdTab('pre',this)">Prefixado</button>
+   </div>
+   <div class="fgrid">
+    <div class="field"><label>Valor investido (R$)</label><input type="number" id="td-val" value="5000" min="0" oninput="calcTD()"></div>
+    <div class="field"><label>Prazo (anos)</label><input type="number" id="td-anos" value="5" min="1" oninput="calcTD()"></div>
+    <div class="field"><label id="td-tlbl">Taxa Selic (%)</label><input type="number" id="td-taxa" value="13.75" step="0.01" oninput="calcTD()"></div>
+    <div class="field" id="td-ipca-f" style="display:none"><label>IPCA estimado (%)</label><input type="number" id="td-ipca" value="4.5" step="0.1" oninput="calcTD()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Valor Líquido</div><div class="rv" id="td-liq">—</div></div>
+     <div class="ri"><div class="rl">Valor Bruto</div><div class="rv" id="td-bruto">—</div></div>
+     <div class="ri"><div class="rl">Imposto de Renda</div><div class="rv" id="td-ir">—</div></div>
+     <div class="ri gr"><div class="rl">Rentab. Líquida</div><div class="rv" id="td-rent">—</div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: RENDA MENSAL -->
+<div id="modal-renda" class="overlay" onclick="overlayClick(event,'renda')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(6,182,212,0.15)">💵</div>
+    <div><div class="mtitle">Renda Passiva</div><div class="msub">quanto patrimônio você precisa ter?</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('renda')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>Renda desejada (R$/mês)</label><input type="number" id="rm-renda" value="5000" min="0" oninput="calcRenda()"></div>
+    <div class="field"><label>Taxa mensal (%)</label><input type="number" id="rm-taxa" value="0.8" step="0.05" min="0.01" oninput="calcRenda()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Patrimônio Necessário</div><div class="rv" id="rm-pat">—</div></div>
+     <div class="ri gr"><div class="rl">Renda Anual</div><div class="rv" id="rm-anual">—</div></div>
+     <div class="ri"><div class="rl">Taxa Anual Equiv.</div><div class="rv" id="rm-ta">—</div></div>
+     <div class="ri"><div class="rl">Renda Diária</div><div class="rv" id="rm-dia">—</div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: APORTES MENSAIS -->
+<div id="modal-aportes" class="overlay" onclick="overlayClick(event,'aportes')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(139,92,246,0.15)">💰</div>
+    <div><div class="mtitle">Aportes Mensais</div><div class="msub">quanto investir por mês pra chegar na sua meta?</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('aportes')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>Meta (R$)</label><input type="number" id="ap-obj" value="1000000" min="0" oninput="calcAportes()"></div>
+    <div class="field"><label>Valor inicial (R$)</label><input type="number" id="ap-ini" value="10000" min="0" oninput="calcAportes()"></div>
+    <div class="field"><label>Taxa anual (%)</label><input type="number" id="ap-taxa" value="12" step="0.1" min="0" oninput="calcAportes()"></div>
+    <div class="field"><label>Prazo (anos)</label><input type="number" id="ap-anos" value="20" min="1" oninput="calcAportes()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Aporte Mensal Necessário</div><div class="rv" id="ap-ap">—</div></div>
+     <div class="ri gr"><div class="rl">Total em Aportes</div><div class="rv" id="ap-tot">—</div></div>
+     <div class="ri"><div class="rl">Juros Gerados</div><div class="rv" id="ap-jur">—</div></div>
+     <div class="ri"><div class="rl">Total Investido</div><div class="rv" id="ap-inv">—</div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: PREVIDÊNCIA -->
+<div id="modal-previdencia" class="overlay" onclick="overlayClick(event,'previdencia')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(244,63,94,0.15)">🛡️</div>
+    <div><div class="mtitle">Previdência Privada</div><div class="msub">PGBL e VGBL — patrimônio e dedução no IR</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('previdencia')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="tabs">
+    <button class="tab on" onclick="setPvTab('pgbl',this)">PGBL</button>
+    <button class="tab" onclick="setPvTab('vgbl',this)">VGBL</button>
+   </div>
+   <div class="fgrid">
+    <div class="field"><label>Aporte mensal (R$)</label><input type="number" id="pv-ap" value="1000" min="0" oninput="calcPrev()"></div>
+    <div class="field"><label>Prazo (anos)</label><input type="number" id="pv-anos" value="30" min="1" oninput="calcPrev()"></div>
+    <div class="field"><label>Rentabilidade anual (%)</label><input type="number" id="pv-taxa" value="10" step="0.1" min="0" oninput="calcPrev()"></div>
+    <div class="field" id="pv-rf"><label>Renda bruta anual (R$)</label><input type="number" id="pv-renda" value="120000" min="0" oninput="calcPrev()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Patrimônio Acumulado</div><div class="rv" id="pv-pat">—</div></div>
+     <div class="ri gr"><div class="rl">Juros Gerados</div><div class="rv" id="pv-jur">—</div></div>
+     <div class="ri"><div class="rl">Total Aportado</div><div class="rv" id="pv-tot">—</div></div>
+     <div class="ri"><div class="rl">Dedução IR (PGBL)</div><div class="rv" id="pv-ded">—</div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: AÇÕES -->
+<div id="modal-acoes" class="overlay" onclick="overlayClick(event,'acoes')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(99,102,241,0.15)">📊</div>
+    <div><div class="mtitle">Ações e Dividendos</div><div class="msub">20+ ações da B3 — DY e projeção de renda</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('acoes')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>Ação</label>
+     <select id="ac-tick" onchange="calcAcoes()">
+      <option value="PETR4">PETR4 — Petrobras PN</option>
+      <option value="VALE3">VALE3 — Vale ON</option>
+      <option value="ITUB4">ITUB4 — Itaú PN</option>
+      <option value="BBDC4">BBDC4 — Bradesco PN</option>
+      <option value="BBAS3">BBAS3 — Banco do Brasil ON</option>
+      <option value="WEGE3">WEGE3 — WEG ON</option>
+      <option value="RENT3">RENT3 — Localiza ON</option>
+      <option value="ABEV3">ABEV3 — Ambev ON</option>
+      <option value="SUZB3">SUZB3 — Suzano ON</option>
+      <option value="RADL3">RADL3 — Raia Drogasil ON</option>
+      <option value="VIVT3">VIVT3 — Telefônica ON</option>
+      <option value="CMIG4">CMIG4 — Cemig PN</option>
+      <option value="ELET3">ELET3 — Eletrobras ON</option>
+      <option value="CPLE6">CPLE6 — Copel PNB</option>
+      <option value="TRPL4">TRPL4 — CTEEP PN</option>
+      <option value="TAEE11">TAEE11 — Taesa UNT</option>
+      <option value="EGIE3">EGIE3 — Engie ON</option>
+      <option value="SAPR11">SAPR11 — Sanepar UNT</option>
+      <option value="CSMG3">CSMG3 — Copasa ON</option>
+      <option value="LREN3">LREN3 — Lojas Renner ON</option>
+     </select>
+    </div>
+    <div class="field"><label>Quantidade de ações</label><input type="number" id="ac-qtd" value="100" min="1" oninput="calcAcoes()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri"><div class="rl">Preço por Ação</div><div class="rv" id="ac-preco">—</div></div>
+     <div class="ri"><div class="rl">Valor Investido</div><div class="rv" id="ac-inv">—</div></div>
+     <div class="ri"><div class="rl">Dividend Yield (DY)</div><div class="rv" id="ac-dy">—</div></div>
+     <div class="ri hi"><div class="rl">Dividendo Mensal Est.</div><div class="rv" id="ac-men">—</div></div>
+     <div class="ri gr"><div class="rl">Dividendo Anual Est.</div><div class="rv" id="ac-anual">—</div></div>
+     <div class="ri"><div class="rl">Setor</div><div class="rv" id="ac-setor">—</div></div>
+     <div class="ri"><div class="rl">Dividendo / Ação / Mês</div><div class="rv" id="ac-divacao">—</div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: FIIs -->
+<div id="modal-fiis" class="overlay" onclick="overlayClick(event,'fiis')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(245,158,11,0.15)">🏢</div>
+    <div><div class="mtitle">Fundos Imobiliários</div><div class="msub">15+ FIIs — yield e renda mensal por cotas</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('fiis')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>FII</label>
+     <select id="fii-tick" onchange="calcFIIs()">
+      <option value="HGLG11">HGLG11 — CSHG Logística</option>
+      <option value="MXRF11">MXRF11 — Maxi Renda</option>
+      <option value="KNRI11">KNRI11 — Kinea Renda</option>
+      <option value="VISC11">VISC11 — Vinci Shopping</option>
+      <option value="XPLG11">XPLG11 — XP Log</option>
+      <option value="BCFF11">BCFF11 — BTG Fundo de Fundos</option>
+      <option value="RBRF11">RBRF11 — RBR Alpha</option>
+      <option value="HGRE11">HGRE11 — CSHG Real Estate</option>
+      <option value="XPML11">XPML11 — XP Malls</option>
+      <option value="BTLG11">BTLG11 — BTG Logística</option>
+      <option value="IRDM11">IRDM11 — Iridium Recebíveis</option>
+      <option value="KNCR11">KNCR11 — Kinea CRI</option>
+      <option value="RZTR11">RZTR11 — Riza Terrax</option>
+      <option value="VGIP11">VGIP11 — Valora IP</option>
+      <option value="HGBS11">HGBS11 — CSHG Brasil Shopping</option>
+     </select>
+    </div>
+    <div class="field"><label>Quantidade de cotas</label><input type="number" id="fii-qtd" value="50" min="1" oninput="calcFIIs()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado</div>
+    <div class="rgrid">
+     <div class="ri"><div class="rl">Preço por Cota</div><div class="rv" id="fii-preco">—</div></div>
+     <div class="ri"><div class="rl">Valor Investido</div><div class="rv" id="fii-inv">—</div></div>
+     <div class="ri"><div class="rl">Yield Mensal</div><div class="rv" id="fii-ym">—</div></div>
+     <div class="ri"><div class="rl">Yield Anual</div><div class="rv" id="fii-ya">—</div></div>
+     <div class="ri hi"><div class="rl">Dividendo Mensal</div><div class="rv" id="fii-men">—</div></div>
+     <div class="ri gr"><div class="rl">Dividendo Anual</div><div class="rv" id="fii-anual">—</div></div>
+     <div class="ri"><div class="rl">Tipo de Fundo</div><div class="rv" id="fii-tipo">—</div></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<!-- MODAL: CARTEIRA -->
+<div id="modal-carteira" class="overlay" onclick="overlayClick(event,'carteira')">
+ <div class="mbox">
+  <div class="mbox-accent"></div>
+  <div class="mhead">
+   <div class="mhead-left">
+    <div class="mico" style="background:rgba(16,185,129,0.15)">🎯</div>
+    <div><div class="mtitle">Carteira Completa</div><div class="msub">renda fixa + ações + FIIs numa visão só</div></div>
+   </div>
+   <button class="mclose" onclick="closeModal('carteira')" aria-label="Fechar">✕</button>
+  </div>
+  <div class="mbody">
+   <div class="fgrid">
+    <div class="field"><label>Renda fixa — valor (R$)</label><input type="number" id="ct-rf" value="50000" min="0" oninput="calcCarteira()"></div>
+    <div class="field"><label>Renda fixa — taxa mensal (%)</label><input type="number" id="ct-rft" value="0.9" step="0.05" min="0" oninput="calcCarteira()"></div>
+    <div class="field"><label>Ações — valor (R$)</label><input type="number" id="ct-ac" value="30000" min="0" oninput="calcCarteira()"></div>
+    <div class="field"><label>Ações — DY anual (%)</label><input type="number" id="ct-ady" value="8" step="0.5" min="0" oninput="calcCarteira()"></div>
+    <div class="field"><label>FIIs — valor (R$)</label><input type="number" id="ct-fii" value="20000" min="0" oninput="calcCarteira()"></div>
+    <div class="field"><label>FIIs — yield mensal (%)</label><input type="number" id="ct-fym" value="0.85" step="0.05" min="0" oninput="calcCarteira()"></div>
+   </div>
+   <div class="rpanel">
+    <div class="rtitle">Resultado da Carteira</div>
+    <div class="rgrid">
+     <div class="ri hi"><div class="rl">Renda Mensal Total</div><div class="rv" id="ct-men">—</div></div>
+     <div class="ri gr"><div class="rl">Renda Anual Total</div><div class="rv" id="ct-anual">—</div></div>
+     <div class="ri"><div class="rl">Patrimônio Total</div><div class="rv" id="ct-pat">—</div></div>
+     <div class="ri"><div class="rl">Yield Médio Mensal</div><div class="rv" id="ct-yield">—</div></div>
+     <div class="ri"><div class="rl">Renda Fixa / mês</div><div class="rv" id="ct-rfr">—</div></div>
+     <div class="ri"><div class="rl">Ações + FIIs / mês</div><div class="rv" id="ct-varr">—</div></div>
+    </div>
+    <div class="cwrap"><canvas id="chart-carteira"></canvas></div>
+   </div>
+  </div>
+ </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <div class="nav-logo">📈</div>
+    FinCalc
+  </div>
+  <p>Feito por <strong style="color:var(--p2)">Matheus Augusto</strong></p>
+  <div class="footer-contacts">
+    <a href="https://wa.me/5543999555144" target="_blank" rel="noopener">💬 (43) 99955-5144</a>
+    <a href="mailto:dev.matheusaugustoo@gmail.com">✉️ dev.matheusaugustoo@gmail.com</a>
+    <a href="https://instagram.com/dev.matheuss" target="_blank" rel="noopener">📸 @dev.matheuss</a>
+  </div>
+  <p style="margin-top:12px;font-size:0.75rem">valores de referência — não é recomendação de investimento.</p>
+  <div class="footer-links">
+    <a href="https://github.com/dev-matheuss" target="_blank">⭐ GitHub</a>
+  </div>
+</footer>
+
+<script src="calculators.js"></script>
+</body>
+</html>
